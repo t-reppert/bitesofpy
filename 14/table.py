@@ -7,13 +7,8 @@ awake = [True, False] * 3
 SEPARATOR = ' | '
 
 
-def generate_table(*argv):
-    for i in range(len(argv[0])):
-        row = ""
-        for j in range(len(argv)):
-            if j == len(argv) - 1:
-                row += str(argv[j][i])
-                yield row
-            else:
-                row += str(argv[j][i]) + SEPARATOR
+def generate_table(*sequences):
+    for seq in zip(*sequences):
+        seq = [str(val) for val in seq]
+        yield SEPARATOR.join(seq)
 
