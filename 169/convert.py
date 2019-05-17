@@ -6,8 +6,8 @@ def convert(value: float, fmt: str) -> float:
     :return: Float rounded to 4 decimal places after conversion
     """
     if type(value) == float or type(value) == int:
-        if fmt == "cm" or fmt == "in":
-            if fmt =="cm":
+        if fmt.lower() == "cm" or fmt.lower() == "in":
+            if fmt.lower() =="cm":
                 return value / 0.39
             else:
                 return 0.39 * value
