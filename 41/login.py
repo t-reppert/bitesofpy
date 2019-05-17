@@ -3,14 +3,14 @@ loggedin_users = ['mike', 'sue']
 
 
 def login_required(func):
-    def wrapper(*args, **kwargs):
-        if args[0] not in known_users:
+    def wrapper(user, *args, **kwargs):
+        if user not in known_users:
             return "please create an account"
-        elif args[0] not in loggedin_users:
+        elif user not in loggedin_users:
             return "please login"
         else:
             wrapper.__doc__ = func.__doc__
-            return func(*args, **kwargs)
+            return func(user, *args, **kwargs)
     return wrapper
 
 
