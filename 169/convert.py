@@ -8,9 +8,11 @@ def convert(value: float, fmt: str) -> float:
     if type(value) == float or type(value) == int:
         if fmt.lower() == "cm" or fmt.lower() == "in":
             if fmt.lower() =="cm":
+                # value is in inches
                 return round(float(value * 2.54),4)
             else:
-                return round(float(value * 0.3937),4)
+                # value is in cm
+                return round(float(value / 2.54),4)
         else:
             raise ValueError
     else:
