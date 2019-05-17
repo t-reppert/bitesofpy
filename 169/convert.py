@@ -8,9 +8,9 @@ def convert(value: float, fmt: str) -> float:
     if type(value) == float or type(value) == int:
         if fmt.lower() == "cm" or fmt.lower() == "in":
             if fmt.lower() =="cm":
-                return value / 0.39
+                return round(float(value * 2.54),4)
             else:
-                return 0.39 * value
+                return round(float(value * 0.3937),4)
         else:
             raise ValueError
     else:
