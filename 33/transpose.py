@@ -13,25 +13,8 @@ def transpose(data):
     In: transpose(data)
     Out: [('Bob', 'Julian'), (60, 221), (60, 34), (56, 78)]
     """
-    data_transposed = []
     if type(data) == list:
-        data_t = {}
-        for j in range(len(data[0])):
-            for i in range(len(data)):
-                if j not in data_t:
-                    data_t[j] = [data[i][j]]
-                else:
-                    data_t[j].append(data[i][j])
-        for k,v in data_t.items():
-            data_transposed.append(tuple(v))
+        return list(zip(*data))
     else:
-        keys = []    
-        values = []
-        for k,v in data.items():
-            keys.append(k)
-            values.append(v)
-        keys=tuple(keys)
-        values=tuple(values)
-        data_transposed = [keys,values]
+        return [data.keys(),data.values()]
 
-    return data_transposed
