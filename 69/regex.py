@@ -5,27 +5,19 @@ def has_timestamp(text):
     """Return True if text has a timestamp of this format:
        2014-07-03T23:30:37"""
     timestamp_regex = re.compile(r'[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}')
-    if timestamp_regex.search(text):
-        return True
-    else:
-        return False
+    return timestamp_regex.search(text)
 
 
 def is_integer(number):
     """Return True if number is an integer"""
-    if type(number) != int:
-        return False
-    else:
-        return True
+    return re.match(r'-?\d+$', str(number))
 
 
 def has_word_with_dashes(text):
     """Returns True if text has one or more words with dashes"""
     dashes = re.compile(r'([a-zA-Z0-9]-[a-zA-Z0-9])+')
-    if dashes.search(text):
-        return True
-    else:
-        return False
+    return dashes.search(text)
+
 
 def remove_all_parenthesis_words(text):
     """Return text but without any words or phrases in parenthesis:
@@ -52,10 +44,7 @@ def remove_duplicate_spacing(text):
 def has_three_consecutive_vowels(word):
     """Returns True if word has at least 3 consecutive vowels"""
     vowels = re.compile(r'[aeiou]{3}',re.I)
-    if vowels.search(word):
-        return True
-    else:
-        return False
+    return vowels.search(word)
 
 
 def convert_emea_date_to_amer_date(date):
