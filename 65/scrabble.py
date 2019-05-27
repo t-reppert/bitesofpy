@@ -16,12 +16,10 @@ def get_possible_dict_words(draw):
        dictionary"""
     perms = _get_permutations_draw(draw)
     wordlist = set()
-
-    for word in list(dictionary):
-        if len(word) > 1 and len(word) < len(draw):
-            for letterlist in perms:
-                if word in letterlist and word not in wordlist:
-                    wordlist.add(word)
+    for letters in perms:
+        for i in range(len(letters),1,-1):
+            if letters[:i] in dictionary:
+                wordlist.add(letters[:i])
     return wordlist
 
 def _get_permutations_draw(draw):
@@ -29,5 +27,4 @@ def _get_permutations_draw(draw):
        use itertools.permutations (order of letters matters)"""
     lol = ''.join(draw)
     return [ ''.join(x).lower() for x in itertools.permutations(lol) ]
-
 
