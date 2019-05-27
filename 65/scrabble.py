@@ -18,11 +18,11 @@ def get_possible_dict_words(draw):
     wordlist = set()
 
     for word in list(dictionary):
-        if len(word) > 1:
+        if len(word) > 1 and len(word) < len(draw):
             for letterlist in perms:
                 if word in letterlist and word not in wordlist:
                     wordlist.add(word)
-    return sorted(wordlist, key=lambda x:len(x),reverse=True)
+    return wordlist
 
 def _get_permutations_draw(draw):
     """Helper to get all permutations of a draw (list of letters), hint:
