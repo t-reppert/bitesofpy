@@ -28,7 +28,7 @@ class Color:
     @classmethod
     def hex2rgb(cls, hexval):
         """Class method that converts a hex value into an rgb one"""
-        if len(hexval) != 6 or '#' not in hexval:
+        if len(hexval) != 7 or '#' not in hexval:
             raise ValueError
         hexval = hexval.lstrip('#')
         return (int(hexval[0:1],base=16),int(hexval[2:3],base=16),int(hexval[4:5],base=16))
@@ -41,10 +41,7 @@ class Color:
         elif max(rgbval) > 255 or min(rgbval) < 0:
             raise ValueError
         r,g,b = rgbval
-        r = hex(r).lstrip('0x').zfill(2)
-        g = hex(g).lstrip('0x').zfill(2)
-        b = hex(b).lstrip('0x').zfill(2)
-        return f'#{r}{g}{b}'
+        return f'#{r:02x}{g:02x}{b:02x}'
 
     def __repr__(self):
         """Returns the repl of the object"""
@@ -52,7 +49,4 @@ class Color:
 
     def __str__(self):
         """Returns the string value of the color object"""
-        if self.rgb in COLOR_NAMES.values():
-            return f'{self.rgb}'
-        else:
-            return 'Unknown'
+        return f'{self.rgb}' if self.rgb else "Unknown"
