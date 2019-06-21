@@ -13,23 +13,14 @@ def top_python_questions(url=cached_so_url):
     """
     response = requests.get(cached_so_url)
     soup = BeautifulSoup(response.text, 'html.parser')
-    questions = soup.find_all('a', class_='question-hyperlink')
-    votes = soup.find_all('span', class_='vote-count-post')
-    views = soup.find_all('div',class_='views')
-    questions_list = []
-    votes_list = []
-    views_list = []
-    for i in votes:
-        votes_list.append(i.find('strong').contents[0])
-    for i in questions:
-        questions_list.append(i.contents[0])
-    for i in views:
-        views_list.append(i.text.strip())
-    temp_list = list(zip(questions_list,votes_list,views_list))
-    final_list = []
-    for i in temp_list:
-        if 'm views' in i[2]:
-            final_list.append(( i[0],int(i[1]) ))
-    final_list = sorted(final_list,key=lambda x:x[1],reverse=True)
-    return final_list
+    questions = soup.select('.question-summary')
+    answer = []
+    for q in questions:
+        question = q.select_one('.question-hyperlink').get_text()
+        votes = q.select_one('.vote-count-post').get_text()
+        views = q.select_one('.views').get_text()
+        if 'm views' not in views:
+            continue
+        answer.append((question,int(votes)))
+    return sorted(answer, key=lambda x:x[1], reverse=True)
     
