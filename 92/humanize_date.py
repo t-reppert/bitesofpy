@@ -1,5 +1,5 @@
 from collections import namedtuple
-from datetime import datetime,timedelta
+from datetime import datetime
 
 
 TimeOffset = namedtuple('TimeOffset', 'offset date_str divider')
@@ -25,12 +25,9 @@ def pretty_date(date):
     if date > NOW:
         raise ValueError
     offset = int((NOW - date).total_seconds())
-    offset_date = NOW - timedelta(seconds=offset)
-    print(offset)
-    print(offset_date.strftime('%m/%d/%y'))
     for i in range(0,len(TIME_OFFSETS)-1):
         if offset >= 2*DAY:
-            return offset_date.strftime('%m/%d/%y')
+            return date.strftime('%m/%d/%y')
         if offset < 10:
             return TIME_OFFSETS[0].date_str
         if offset == 10:
