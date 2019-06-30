@@ -38,6 +38,6 @@ def calc_months_passed(year, month, day):
     month_total = 0
     month_total += delta.years * MONTHS_PER_YEAR
     month_total += delta.months
-    if delta.days >= 10:
+    if delta.days >= MIN_DAYS_TO_COUNT_AS_MONTH:
         month_total += 1
     return month_total
