@@ -26,19 +26,13 @@ def get_year_region_breakdown(df):
 def get_best_sales_rep(df):
     """Return a tuple of the name of the sales rep and
        the total of his/her sales"""
-    grouprep = df.groupby(['Rep'])
-    topsales = grouprep['Rep','Total'].agg(np.sum).sort_values(
-                                       'Total',ascending=False).head(1)
-    topsales.reset_index(level=0, inplace=True)
-    return list(topsales.itertuples(index=False))[0]
+    grouprep = df.groupby(['Rep']).sum().sort_values('Total',ascending=False).iloc[0]
+    return grouprep.name, grouprep.Total
 
 
 
 def get_most_sold_item(df):
     """Return a tuple of the name of the most sold item
        and the number of units sold"""
-    groupbyitem = df.groupby(['Item'])
-    topitem = groupbyitem['Item','Units'].agg(np.sum).sort_values(
-                                          'Units',ascending=False).head(1)
-    topitem.reset_index(level=0, inplace=True)
-    return list(topitem.itertuples(index=False))[0]
+    groupbyitem = df.groupby(['Item']).sum().sort_values('Units',ascending=False).iloc[0]
+    return groupbyitem.name, groupbyitem.Units
