@@ -41,7 +41,3 @@ class IntList(list):
     def median(self):
         return median(self)
 
-# mylist = IntList([1, 3, 5])
-# mylist.append(7)
-# mylist.append([2, 5])
-# print(mylist)
