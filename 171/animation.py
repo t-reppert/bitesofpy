@@ -17,7 +17,7 @@ def spinner(seconds):
         sys.stdout.write('\r'+spin)
         sys.stdout.flush()
         sleep(STATE_TRANSITION_TIME)
-    
+    print()
 
 
 if __name__ == '__main__':
