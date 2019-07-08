@@ -33,9 +33,9 @@ def high_low_record_breakers_for_2015():
     5. From the record breakers in 2015, extract the high/low of all the temperatures
        * Return those as STATION namedtuples, (high_2015, low_2015)
     """
-    df = pd.read_csv(DATA_FILE)
+    raw_df = pd.read_csv(DATA_FILE)
     # strip leap dates
-    df = df[df['Date'].str.contains('-02-29')==False]
+    df = raw_df[raw_df['Date'].str.contains('-02-29')==False]
     df['Date'] = pd.to_datetime(df['Date'])
 
     # Max groups
@@ -67,11 +67,14 @@ def high_low_record_breakers_for_2015():
     for row in df_0514.itertuples():
         month = row.Date.month
         day = row.Date.day
-        df = df_2015[(df_2015['Date'].dt.day == day) & (df_2015['Date'].dt.month == month) ]
+        df = df_2015[ (df_2015['Date'].dt.day == day) & (df_2015['Date'].dt.month == month) ]
         data = list(df.itertuples())[0]
         if float(row.TMAX) < float(data.TMAX):
-            max_val.append(STATION(ID=data.ID_MAX,Date=data.Date.date(),Value=float(data.TMAX/10)))
+            max_val.append(STATION(ID=data.ID_MAX,Date=data.Date.date(),Value=data.TMAX/10))
         if float(data.TMIN) < float(row.TMIN):
-            min_val.append(STATION(ID=data.ID_MIN,Date=data.Date.date(),Value=float(data.TMIN/10)))
+            min_val.append(STATION(ID=data.ID_MIN,Date=data.Date.date(),Value=data.TMIN/10))
 
-    return (sorted(max_val,key=lambda x: x.Value,reverse=True)[0], sorted(min_val,key=lambda x: x.Value)[0])
+    max = sorted(max_val,key=lambda x: x.Value,reverse=True)[0]
+    min = sorted(min_val,key=lambda x: x.Value)[0]
+
+    return max, min
