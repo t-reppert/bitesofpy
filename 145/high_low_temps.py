@@ -33,9 +33,9 @@ def high_low_record_breakers_for_2015():
     5. From the record breakers in 2015, extract the high/low of all the temperatures
        * Return those as STATION namedtuples, (high_2015, low_2015)
     """
-    raw_df = pd.read_csv(DATA_FILE)
+    df = pd.read_csv(DATA_FILE)
     # strip leap dates
-    df = raw_df.loc[raw_df['Date'].str.contains('-02-29')==False]
+    df = df.loc[df['Date'].str.contains('-02-29')==False]
     df['Date'] = pd.to_datetime(df.loc[:,'Date'])
 
     # Max groups
@@ -59,8 +59,8 @@ def high_low_record_breakers_for_2015():
     df_combined = max_df.join(min_df)
 
     df_combined.reset_index(inplace=True)
-    df_0514 = df_combined[df_combined['Date'].dt.year < 2015]
-    df_2015 = df_combined[df_combined['Date'].dt.year == 2015]
+    df_0514 = df_combined.loc[df_combined['Date'].dt.year < 2015]
+    df_2015 = df_combined.loc[df_combined['Date'].dt.year == 2015]
 
     max_val = []
     min_val = []
