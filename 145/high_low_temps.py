@@ -74,4 +74,4 @@ def high_low_record_breakers_for_2015():
         if float(data.TMIN) < float(row.TMIN):
             min_val.append(STATION(ID=data.ID_MIN,Date=data.Date.date(),Value=float(data.TMIN/10)))
 
-    return sorted(max_val,key=lambda x: x.Value,reverse=True)[0], sorted(min_val,key=lambda x: x.Value)[0]
+    return (sorted(max_val,key=lambda x: x.Value,reverse=True)[0], sorted(min_val,key=lambda x: x.Value)[0])
