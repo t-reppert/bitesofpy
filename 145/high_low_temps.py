@@ -35,16 +35,16 @@ def high_low_record_breakers_for_2015():
     """
     df = pd.read_csv(DATA_FILE)
     # strip leap dates
-    df = df.loc[df['Date'].str.contains('-02-29')==False]
+    df = df.loc[df.loc[:,'Date'].str.contains('-02-29')==False]
     df['Date'] = pd.to_datetime(df.loc[:,'Date'])
 
     # Max groups
-    maxes = df.loc[df['Element']=='TMAX']
+    maxes = df.loc[df.loc[:,'Element']=='TMAX']
     maxes.rename(columns={'Data_Value':'TMAX','ID':'ID_MAX'}, inplace=True)
     gb_max = maxes.groupby('Date')['TMAX'].idxmax()
 
     # Min groups
-    mins = df.loc[df['Element']=='TMIN']
+    mins = df.loc[df.loc[:,'Element']=='TMIN']
     mins.rename(columns={'Data_Value':'TMIN','ID':'ID_MIN'}, inplace=True)
     gb_min = mins.groupby('Date')['TMIN'].idxmin()
 
@@ -59,22 +59,33 @@ def high_low_record_breakers_for_2015():
     df_combined = max_df.join(min_df)
 
     df_combined.reset_index(inplace=True)
-    df_0514 = df_combined.loc[df_combined['Date'].dt.year < 2015]
-    df_2015 = df_combined.loc[df_combined['Date'].dt.year == 2015]
+    df_0514 = df_combined.loc[df_combined.loc[:,'Date'].dt.year < 2015]
+    df_2015 = df_combined.loc[df_combined.loc[:,'Date'].dt.year == 2015]
+
+    dict2015 = {}
+    for row in df_2015.itertuples():
+        month = str(row.Date.month)
+        day = str(row.Date.day)
+        dict2015[month+"_"+day] = { 'Date':row.Date.date(), 
+                                    'ID_MIN':row.ID_MIN, 
+                                    'ID_MAX':row.ID_MAX, 
+                                    'TMIN':row.TMIN,
+                                    'TMAX':row.TMAX }
 
     max_val = []
     min_val = []
     for row in df_0514.itertuples():
-        month = row.Date.month
-        day = row.Date.day
-        df = df_2015.loc[ (df_2015['Date'].dt.day == day) & (df_2015['Date'].dt.month == month) ]
-        data = list(df.itertuples())[0]
-        if float(row.TMAX) < float(data.TMAX):
-            max_val.append(STATION(ID=data.ID_MAX,Date=data.Date.date(),Value=data.TMAX/10))
-        if float(data.TMIN) < float(row.TMIN):
-            min_val.append(STATION(ID=data.ID_MIN,Date=data.Date.date(),Value=data.TMIN/10))
+        month = str(row.Date.month)
+        day = str(row.Date.day)
+        lookup = dict2015[month+"_"+day]
+
+        if row.TMAX < lookup['TMAX']:
+            max_val.append(STATION(ID=lookup['ID_MAX'], Date=lookup['Date'], Value=lookup['TMAX']/10))
+        if lookup['TMIN'] < row.TMIN:
+            min_val.append(STATION(ID=lookup['ID_MIN'], Date=lookup['Date'], Value=lookup['TMIN']/10))
 
     max = sorted(max_val,key=lambda x: x.Value,reverse=True)[0]
     min = sorted(min_val,key=lambda x: x.Value)[0]
 
     return max, min
+
