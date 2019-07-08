@@ -35,16 +35,16 @@ def high_low_record_breakers_for_2015():
     """
     raw_df = pd.read_csv(DATA_FILE)
     # strip leap dates
-    df = raw_df[raw_df['Date'].str.contains('-02-29')==False]
-    df['Date'] = pd.to_datetime(df['Date'])
+    df = raw_df.loc[raw_df['Date'].str.contains('-02-29')==False]
+    df['Date'] = pd.to_datetime(df.loc[:,'Date'])
 
     # Max groups
-    maxes = df[df['Element']=='TMAX']
+    maxes = df.loc[df['Element']=='TMAX']
     maxes.rename(columns={'Data_Value':'TMAX','ID':'ID_MAX'}, inplace=True)
     gb_max = maxes.groupby('Date')['TMAX'].idxmax()
 
     # Min groups
-    mins = df[df['Element']=='TMIN']
+    mins = df.loc[df['Element']=='TMIN']
     mins.rename(columns={'Data_Value':'TMIN','ID':'ID_MIN'}, inplace=True)
     gb_min = mins.groupby('Date')['TMIN'].idxmin()
 
@@ -67,7 +67,7 @@ def high_low_record_breakers_for_2015():
     for row in df_0514.itertuples():
         month = row.Date.month
         day = row.Date.day
-        df = df_2015[ (df_2015['Date'].dt.day == day) & (df_2015['Date'].dt.month == month) ]
+        df = df_2015.loc[ (df_2015['Date'].dt.day == day) & (df_2015['Date'].dt.month == month) ]
         data = list(df.itertuples())[0]
         if float(row.TMAX) < float(data.TMAX):
             max_val.append(STATION(ID=data.ID_MAX,Date=data.Date.date(),Value=data.TMAX/10))
