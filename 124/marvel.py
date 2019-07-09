@@ -42,7 +42,6 @@ def most_popular_characters(top=5):
     """Get the most popular character by number of appearances,
        return top n characters (default 5)"""
     characters = [(x.name, int(x.appearances) ) for x in data if x.appearances != '']
-    #print(characters)
     ordered = sorted(characters, key=lambda x:x[1], reverse=True)[:top]
     return [ x[0] for x in ordered ]
 
