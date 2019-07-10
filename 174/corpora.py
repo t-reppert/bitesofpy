@@ -47,9 +47,15 @@ class Corpora:
     * stopwords
     """
     txt: str = field(default=GETTYSBURG)
-    extra: list = field(default_factory=list)
+    extra: List[str] = field(default_factory=list)
+    stopwords: Set[str] = field(default_factory=set)
     count: int = 5
     tag: str = "#"
+
+    def __post_init__(self):
+        self.extra = self.extra if self.extra else []
+        self.stopwords = STOPWORDS
+
 
     @property
     def cleaned(self) -> str:
