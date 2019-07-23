@@ -34,9 +34,6 @@ def get_most_complex_bites(N=10, stats=stats):
     return bites_selected
 
 
-
-
-
 if __name__ == '__main__':
     res = get_most_complex_bites()
     print(res)
