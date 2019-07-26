@@ -56,7 +56,7 @@ async def session(
     work_length:Union[int,float]=TWENTY_FIVE_MIN,
     short_break_length:Union[int, float]=FIVE_MIN,
     long_break_length:Union[int, float]=THIRTY_MIN,
-):
+) -> None:
     """Session
 
     :param work_length: float of work length in seconds
@@ -82,7 +82,7 @@ async def main(
     short_break_length:Union[int, float]=FIVE_MIN,
     long_break_length:Union[int, float]=THIRTY_MIN,
     lunch_length:Union[int, float]=HOUR,
-):
+) -> None:
     """Main entry point
 
     :param work_length: float of work length in seconds
