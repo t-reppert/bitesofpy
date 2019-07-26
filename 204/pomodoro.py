@@ -53,7 +53,7 @@ async def work_time(delay:Union[int,float], loop:int) -> None:
 
 
 async def session(
-    work_length=TWENTY_FIVE_MIN,
+    work_length:Union[int,float]=TWENTY_FIVE_MIN,
     short_break_length=FIVE_MIN,
     long_break_length=THIRTY_MIN,
 ):
@@ -78,7 +78,7 @@ async def session(
 
 
 async def main(
-    work_length=TWENTY_FIVE_MIN,
+    work_length:Union[int,float]=TWENTY_FIVE_MIN,
     short_break_length=FIVE_MIN,
     long_break_length=THIRTY_MIN,
     lunch_length=HOUR,
