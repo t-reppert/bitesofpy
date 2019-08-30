@@ -32,12 +32,7 @@ class PythonBytes:
         """Return a list of episode IDs (itunes_episode attribute) of the
            episodes the pass in domain was mentioned in.
         """
-        episodes = []
-        for entry in self.entries:
-            print(entry.keys())
-            if domain in entry.summary:
-                episodes.append(entry.itunes_episode)
-        return episodes
+        return [ entry.itunes_episode for entry in self.entries if domain in entry.description ]
 
     def get_most_mentioned_domain_names(self, n: int = 15) -> list:
         """Get the most mentioned domain domains. We match a domain using
@@ -58,21 +53,14 @@ class PythonBytes:
         """Return the number of episodes that had one of more special guests
            featured (use SPECIAL_GUEST).
         """
-        special_guests = 0
-        for entry in self.entries:
-            if SPECIAL_GUEST in entry.summary:
-                special_guests += 1
-        print(special_guests)
-        return special_guests
+        return len([entry for entry in self.entries if SPECIAL_GUEST in entry.description])
 
     def get_average_duration_episode_in_seconds(self) -> NamedTuple:
         """Return the average duration in seconds of a Python Bytes episode, as
            well as the shortest and longest episode in hh:mm:ss notation.
            Return the results using the Duration namedtuple.
         """
-        durations = []
-        for entry in self.entries:
-            durations.append(entry.itunes_duration)
+        durations = [ entry.itunes_duration for entry in self.entries ]
         average = sum(map(lambda f: int(f[0]) * 3600 + int(f[1]) * 60 + int(f[2]),
                           map(lambda f: f.split(':'), durations)))/len(durations)
         max_time = max(durations, key=lambda x: _get_sec(x))
