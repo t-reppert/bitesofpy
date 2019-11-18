@@ -8,7 +8,12 @@ import pytest
     (25, 'Buzz'),
     (21, 'Fizz'),
     (30, 'Fizz Buzz'),
+    (7, 7),
+    (14, 14),
 ])
 def test_fizzbuzz(num, expected):
     actual = fizzbuzz(num)
-    assert actual == expected
+    if (num % 3) != 0 and (num % 5) != 0:
+        assert actual == num
+    else:
+        assert actual == expected
