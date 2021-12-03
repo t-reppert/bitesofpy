@@ -29,11 +29,11 @@ def test_boolean_error3():
 
 def test_neg_error():
     with pytest.raises(ValueError):
-        list_to_decimal([-3, 12])
+        list_to_decimal([-3, 1])
 
 def test_neg_error2():
     with pytest.raises(ValueError):
-        list_to_decimal([10, -3, 12])
+        list_to_decimal([9, 3, 12])
 
 def test_neg_error3():
     with pytest.raises(ValueError):
