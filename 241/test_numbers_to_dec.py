@@ -27,6 +27,10 @@ def test_neg_error3():
     with pytest.raises(ValueError):
         list_to_decimal([1, 3, -2])
 
+def test_neg_error4():
+    with pytest.raises(ValueError):
+        list_to_decimal([10, 3, 2])
+
 def test_dec_error():
     with pytest.raises(TypeError):
         list_to_decimal([3.6, 4, 1])
