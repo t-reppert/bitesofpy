@@ -22,4 +22,4 @@ def test_gen_hex_color(gen):
         color_sample.return_value = [236, 101, 100]
         g = color.gen_hex_color()
         assert type(g) == types.GeneratorType        
-        assert g == '#EC6564'
+        assert next(g) == '#EC6564'
