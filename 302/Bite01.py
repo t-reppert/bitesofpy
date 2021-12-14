@@ -1,0 +1,1 @@
+"MIN_DRIVING_AGE = 18\r\n\r\n\r\ndef allowed_driving(name, age):\r\n    \"\"\"Print '{name} is allowed to drive' or '{name} is not allowed to drive'\r\n       checking the passed in age against the MIN_DRIVING_AGE constant\"\"\"\r\n    if age >= MIN_DRIVING_AGE:\r\n        print(f'{name} is allowed to drive')\r\n    else:\r\n        print(f'{name} is not allowed to drive')"
