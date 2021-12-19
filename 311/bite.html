@@ -1,0 +1,32 @@
+<p>We recently published a blog post about how to approach <a href="https://pybit.es/guest-clean-text-data.html" target="_blank" rel="noopener">Cleaning Text</a> as part of a text mining project. In this Bite you are going to get a chance to put the theory into practice.</p>
+<p>The challenge is:</p>
+<p>1. Read some sample text into a Pandas Dataframe.</p>
+<p>2. Clean the text as described below.</p>
+<p>3. Calculate the TF-IDF for each word of the cleaned text.</p>
+<p>To help you with this Bite you're provided with the function definitions for each of the steps. You are also provided with a <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pipe.html" target="_blank" rel="noopener">Pandas Pipe</a> that combines each of these functions together. Pandas pipes are a great way to create a library of reusable pandas data manipulation functions. A nice little example of how you can use Pandas pipes is given <a href="https://chrisalbon.com/python/data_wrangling/pandas_create_pipeline/" target="_blank" rel="noopener">here</a>.</p>
+<p>You are also provided with a list of stop words to use, and a Pandas implementation of TF-IDF calculation including the completed TF-IDF function.</p>
+<p>Most, if not all, of these functions could be combined into one or two larger functions. The purpose of this Bite is to also help you get familiar with the concepts involved here.</p>
+<h3>Load Sample Text</h3>
+<p>The first thing you need to do is to load the sample text into a dataframe. If you review the sample text file file you can see that the first line just contains a single word <code>text</code>. Use this as the column name for a single column dataframe&nbsp; you'll create in this step. The follow 20 line can then be considered as sample documents that you want to calculate the <code>tf-idf</code> values for.&nbsp;&nbsp;</p>
+<p><em>Input</em>: <code>/tmp/samples.txt</code> file (as downloaded in the template for you)<br /><em>Output</em>: A Pandas dataframe with a single column named&nbsp; <code>text</code> (ignore the index) with 20 rows where each row contains a line from the text file that is imported.</p>
+<h3>Removing URLs and Emails</h3>
+<p>Strip all URLs (<em>http://...</em>) and Emails (<em>somename@email.address</em>) from the text column.</p>
+<p><em>Input</em>: A dataframe with a single <code>text</code> column that may contain URL's and or Emails<br /><em>Output</em>: A dataframe with a single <code>text</code> column where all URL's and emails have been removed</p>
+<h3>Converting to Lowercase</h3>
+<p>Next convert all text characters to lower case</p>
+<p><em>Input</em>: A dataframe with a single <code>text</code> column, potentially of mixed case<br /><em>Output</em>: A dataframe with a single <code>text</code> column where all alphabetically characters in the <code>text</code> column are lower case</p>
+<h3>Removing Stop Words</h3>
+<p>A list of English stop words is provided. In this step all stop words should be removed from the text.</p>
+<p><em>Input</em>: A dataframe with a single <code>text</code> column that may contain English stop words<br /><em>Output</em>: A dataframe with a single <code>text</code> column where all stop words have been removed</p>
+<h3>Removing Non-Ascii Characters</h3>
+<p>Non-ascii characters are typically removed unless they might be useful for sentiment analysis or similar. For this exercise all non-ascii characters should be removed.</p>
+<p><em>Input</em>: A dataframe with a single <code>text</code> column that may include some non-ascii characters<br /><em>Output</em>: A dataframe with a single <code>text</code> column where all non-ascii characters are removed</p>
+<h3>Removing Digits and Punctuation</h3>
+<p>Remove all digits and punctuation.</p>
+<p><em>Input</em>: A dataframe with a single <code>text</code> column that may contain some digits or punctuation<br /><em>Output</em>: A dataframe with a single <code>text</code> column where all digits and punctuation are removed</p>
+<h3>Calculate TF-IDF</h3>
+<p>The text is now clean and you are ready to calculate the TF-IDF value for each word remaining in sample text. This is done for you and returned in the format of a Pandas Dataframe. Have a look at the <code>/tmp/tf-idf.py</code> file (also downloaded and imported for you), and see if there are any Pandas tricks you can learn.</p>
+<p><em>Input</em>: A Pandas dataframe with a single <code>text</code> column<br /><em>Output</em>: A Pandas dataframe representation of the TF-IDF calculation for each of the words in the <code>text</code> column in the input dataframe. Each words becomes a column and documents become rows so a cell contains the tf-idf score for the given word and document (example).</p>
+<h3>Sort TF-IDF Dataframe columns</h3>
+<p>Depending on how the preceding functions were implemented the order of the words in the TD-IDF dataframe might be different from the order used in the tests. Sort the columns alphabetically to overcome this. Remember, at any time you can review the tests if you are not sure what's expected of a particular function.</p>
+<p><em>Input</em>: The TF-IDF dataframe<br /><em>Output</em>: The TF-IDF dataframe sorted by column name</p>
