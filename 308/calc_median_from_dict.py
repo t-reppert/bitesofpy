@@ -1,5 +1,3 @@
-import numpy as np
-
 def calc_median_from_dict(d: dict) -> float:
     """
     :param d: dict of numbers and their occurrences
@@ -7,20 +5,15 @@ def calc_median_from_dict(d: dict) -> float:
     Example:
     {1: 2, 3: 1, 4: 2} -> [1, 1, 3, 4, 4] --> 3 is median
     """
-    minimum = min(d.values())
-    maximum = False
-    for k, v in d.items():
-        if v > minimum and v > 1_000_000_000_000:
-            maximum = max(d.values())
-    if not maximum:
-        d = {k: v//minimum for k, v in d.items()}
-    else:
-        new_d = {}
-        for k,v in d.items():
-            if v >= maximum:
-                new_d[k] = v//maximum
-            else:
-                new_d[k] = v
-        d = new_d
-    new_list = [k for k,v in d.items() for i in range(int(v))]
-    return np.median(new_list)
+    running_total = 0
+    sum_counts = sum(d.values())
+    average = sum_counts / 2
+    equal_check = sum(d.values()) / len(d)
+    if len(d) % 2 == 0 and all([v == equal_check for v in d.values()]):
+        return sum(d.keys()) / 2
+    prev_run_total = 0
+    for num, count in sorted(d.items()):
+        running_total = count + prev_run_total
+        if average <= running_total and average > prev_run_total:
+            return num
+        prev_run_total = running_total
