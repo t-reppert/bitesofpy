@@ -1,0 +1,7 @@
+<p>In this Bite we will take a (nested) <code>dict</code> and transform its (string) keys to <a href="https://en.wikipedia.org/wiki/Snake_case" target="_blank" rel="noopener">snake case</a>.</p>
+<p>So for example this dictionary:</p>
+<pre>{<br />&nbsp; &nbsp; "camelCase": "Value1",<br />&nbsp; &nbsp; "camelcase": "Value1",<br />&nbsp; &nbsp; "PascalCase": "Value2",<br />&nbsp; &nbsp; "kebab-case": "Value3",<br />&nbsp; &nbsp; "ACRONYM": "Value4",<br />&nbsp; &nbsp; "number22": "Value5"<br />}</pre>
+<p>Would result in the following dictionary where the keys have been converted into snake_case:</p>
+<pre>{<br />&nbsp; &nbsp; "camel_case": "Value1",<br />&nbsp; &nbsp; "camelcase": "Value1",<br />&nbsp; &nbsp; "pascal_case": "Value2",<br />&nbsp; &nbsp; "kebab_case": "Value3",<br />&nbsp; &nbsp; "a_c_r_o_n_y_m": "Value4",<br />&nbsp; &nbsp; "number_22": "Value5"<br />}</pre>
+<p>As you can see from this example hyphens, numbers and acronyms trigger snake casing as well.</p>
+<p>Additionally, it should work with nested data structures as well. For example a <code>dict</code> of <code>dict</code>s and a <code>dict</code> where the values contain a (nested) <code>list</code>.</p>
