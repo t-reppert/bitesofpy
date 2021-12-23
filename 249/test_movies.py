@@ -46,6 +46,10 @@ def db():
         (None, 1962, 8.3, [(idx, e[0], e[1], e[2]) for idx, e in enumerate(DATA, start=1) if e[1] == 1962]),
         ("Citizen Kane", None, 8.3, [(idx, e[0], e[1], e[2]) for idx, e in enumerate(DATA, start=1) if e[0] == "Citizen Kane"]),
         ("Citizen Kane", 1941, None, [(idx, e[0], e[1], e[2]) for idx, e in enumerate(DATA, start=1) if e[1] == 1941]),
+        ("Citizen K", None, None, [(idx, e[0], e[1], e[2]) for idx, e in enumerate(DATA, start=1) if e[1] == 1941]),
+        ("izen Kane", None, None, [(idx, e[0], e[1], e[2]) for idx, e in enumerate(DATA, start=1) if e[1] == 1941]),
+        ("izen Kan", None, None, [(idx, e[0], e[1], e[2]) for idx, e in enumerate(DATA, start=1) if e[1] == 1941]),
+
     ],
 )
 def test_query(db, title, year, score_gt, expected):
