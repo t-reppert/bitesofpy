@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import string
-from typing_extensions import _SpecialForm
 from string import punctuation as punct
 
 
