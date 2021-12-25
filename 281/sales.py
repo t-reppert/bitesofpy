@@ -43,7 +43,9 @@ def process_data(url: str) -> pd.DataFrame:
         pd.DataFrame: Pandas DataFrame generated from the processed data
     """
     data = get_data(url)
-    return pd.read_csv(data['download_url'])
+    df = pd.read_csv(data['download_url'])
+    df['month'] = df['month'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d"))
+    return df
 
 
 def summary_report(df: pd.DataFrame, stats: Union[List[str], None] = STATS) -> None:
@@ -66,11 +68,9 @@ def summary_report(df: pd.DataFrame, stats: Union[List[str], None] = STATS) -> N
         2015  608473.83  50706.152500   97237.42
         2016  733947.03  61162.252500  118447.83
     """
-    df['month'] = df['month'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d"))
-    df['year'] = df['month'].apply(lambda x: datetime.strftime(x, "%Y")).apply(int)
-    df.drop(columns=['month'], inplace=True)
-    group_df = df.groupby('year').sales.agg(stats)
-    print(group_df)
+    summary_df = df.copy()
+    summary_df.columns = ['year', 'sales']
+    print(df.groupby(summary_df['year'].dt.year).sales.agg(stats))
 
 
 def yearly_report(df: pd.DataFrame, year: int) -> None:
@@ -104,29 +104,21 @@ def yearly_report(df: pd.DataFrame, year: int) -> None:
         11     78628.72
         12     69545.62
     """
-    df['month'] = df['month'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d"))
-    df['year'] = df['month'].dt.year
-    if year not in df['year'].to_list():
+    yearly_df = df[df['month'].dt.year == year].copy()
+    if yearly_df.empty:
         raise ValueError(f"The year {year} is not included in the report!")
-    df = df[df['month'].dt.year == year ]
-    df['month'] = df['month'].apply(lambda x: datetime.strftime(x, "%-m"))
+    yearly_df = yearly_df.set_index(yearly_df['month'].dt.month)
+    yearly_df = yearly_df.drop(["month"], axis=1)
     print()
     print(year)
-    print(f'{"sales":>15s}')
-    print('month')
-    report = df.to_string(index=False, columns=['month', 'sales'], header=False).splitlines()
-    for line in report:
-        s = line.split()
-        if year == 2016:
-            print(f'{s[0]:<2s}{s[1]:>14s}')
-        else:
-            print(f'{s[0]:<2s}{s[1]:>13s}')
+    print(yearly_df)
+
 
 #uncomment the following for viewing/testing the reports/code
-#if __name__ == "__main__":
-    #data = process_data(URL)
+if __name__ == "__main__":
+    data = process_data(URL)
     #summary_report(data)
     #for year in (data["month"].dt.year).unique():
     #   yearly_report(data, year)
 
-    #yearly_report(data, 2016)
+    yearly_report(data, 2016)
