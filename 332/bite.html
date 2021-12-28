@@ -1,0 +1,13 @@
+<p>Bill is looking for a new apartment with good view, staying away from the crowed city.&nbsp;</p>
+<p>He has been working with some agents and has piles of data of all sorts of buildings. However he is too busy to go through the data. Can you help him by designing a fast algorithm to search for the best possible apartment(s) with the desired view?</p>
+<p>The requirement: <em>find an apartment with either sun set or sun rise view</em>. Given an list of buildings in height (floors), and desired view, either East (sun rise) or West (sun set), you have to find all the candidate buildings and return them by their position (index) in the passed in building <code>list</code>.&nbsp;&nbsp;</p>
+<h4>An example</h4>
+<p>Here is a visual representation when <code>buildings</code> input argument is <code>[3, 5, 4, 3, 3, 1]</code> (each <code>int</code> represents the height of the building and note that the buildings are in one line with no gaps in between):</p>
+<pre><br />  &nbsp; &nbsp; &nbsp;    &nbsp; &nbsp; _<br />  &nbsp; West&nbsp; &nbsp; &nbsp; | |_&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; East<br />  &nbsp; &nbsp; &nbsp;    &nbsp; _| | |_ _<br />  &nbsp; &nbsp; &nbsp;    &nbsp;| | | | | |<br />  &nbsp; &nbsp; &nbsp;    &nbsp;| | | | | |_<br />  &nbsp; &nbsp; &nbsp;    &nbsp;|_|_|_|_|_|_|<br /><br /></pre>
+<p>Expected output for this buildings input list:</p>
+<p>- Given direction <code>WEST</code> (<code>'W'</code>) -&gt; the function returns <code>[0, 1]</code> = indices of buildings that can see the <em>sun set</em>.</p>
+<p>- Given direction <code>EAST</code> (<code>'E'</code>) -&gt; the function returns <code>[1, 2, 4, 5]</code> = indices of buildings that can see the <em>sun rise</em>.</p>
+<h4>Example running the function in the REPL</h4>
+<pre>&gt;&gt;&gt; search_apartment([3, 5, 4, 3, 3, 1], 'W')<br />&nbsp; &nbsp; [0, 1]&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />&gt;&gt;&gt; search_apartment([3, 5, 4, 3, 3, 1], 'E')<br />&nbsp; &nbsp; [1, 2, 4, 5]<br />&gt;&gt;&gt; search_apartment([1, 1, 1, 1, 1], 'W')<br />&nbsp; &nbsp; [0]<br />&gt;&gt;&gt; search_apartment([2, 1, 1, 1, 1], 'E')<br />&nbsp; &nbsp; [0, 4]</pre>
+<p>See the accompanying tests for more examples.</p>
+<p>Good luck and keep calm and code in Python!</p>
