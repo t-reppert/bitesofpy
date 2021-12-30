@@ -7,7 +7,7 @@ from urllib.request import urlretrieve
 import pytest
 
 from zodiac import (get_signs, get_sign_with_most_famous_people,
-                    signs_are_mutually_compatible, get_sign_by_date)
+                    signs_are_mutually_compatible, get_sign_by_date, Sign)
 
 # original source: https://zodiacal.herokuapp.com/api
 URL = "https://bites-data.s3.us-east-2.amazonaws.com/zodiac.json"
@@ -22,6 +22,11 @@ def signs():
     with open(PATH) as f:
         data = json.loads(f.read())
     return get_signs(data)
+
+
+def test_signs(signs):
+    for sign in signs:
+        assert isinstance(sign, Sign)
 
 def test_get_sign_with_most_people(signs):
     actual = get_sign_with_most_famous_people(signs)
