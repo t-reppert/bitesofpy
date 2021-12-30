@@ -5,7 +5,6 @@ import pytest
 
 from guess import GuessGame, InvalidNumber, MAX_NUMBER
 
-
 # write test code to reach 100% coverage and a 100% mutpy score
 
 def test_invalid_secret_numbers():
@@ -13,6 +12,8 @@ def test_invalid_secret_numbers():
         GuessGame('haha')
     with pytest.raises(InvalidNumber, match='Negative number'):
         GuessGame(-50)
+    with pytest.raises(InvalidNumber, match='Number too high'):
+        GuessGame(MAX_NUMBER+50)
     with pytest.raises(InvalidNumber, match='Number too high'):
         GuessGame(MAX_NUMBER+50)
 
@@ -26,6 +27,7 @@ def test_valid_secret_numbers(monkeypatch, capsys):
 
 def test_valid_secret_numbers(monkeypatch, capsys):
     g = GuessGame(0)
+    assert g.attempt == 0
     with monkeypatch.context() as m:
         m.setattr('builtins.input', lambda: 0)
         g()
@@ -104,3 +106,7 @@ def test_max_guesses_2(monkeypatch, capsys):
         captured = capsys.readouterr()
         assert f"Sorry, the number was 9\n" in captured.out
         assert g.max_guesses == 8
+    
+def test_max_number():
+    assert MAX_NUMBER == 15
+
