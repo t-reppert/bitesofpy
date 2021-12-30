@@ -24,6 +24,14 @@ def test_valid_secret_numbers(monkeypatch, capsys):
         captured = capsys.readouterr()
         assert "You guessed it!\n" in captured.out
 
+def test_valid_secret_numbers(monkeypatch, capsys):
+    g = GuessGame(0)
+    with monkeypatch.context() as m:
+        m.setattr('builtins.input', lambda: 0)
+        g()
+        captured = capsys.readouterr()
+        assert "You guessed it!\n" in captured.out
+
 
 def make_multiple_inputs(inputs):
     def next_input():
@@ -71,3 +79,28 @@ def test_max_guesses(monkeypatch, capsys):
         g()
         captured = capsys.readouterr()
         assert f"Sorry, the number was 9\n" in captured.out
+        assert g.max_guesses == 5
+
+
+def test_max_guesses_2(monkeypatch, capsys):
+    g = GuessGame(9, 8)
+    with monkeypatch.context() as m:
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        m.setattr('builtins.input', lambda: 12)
+        g()
+        captured = capsys.readouterr()
+        assert f"Sorry, the number was 9\n" in captured.out
+        assert g.max_guesses == 8
