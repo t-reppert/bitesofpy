@@ -33,7 +33,9 @@ def test_get_sign_with_most_people(signs):
     ('Taurus','Capricorn', True),
     ('Gemini','Pisces', False),
     ('Aries','Scorpio', False),
-
+    ('Aries','Blah', False),
+    ('Blah','Blearg', False),
+    (1,2, False),
 ])
 def test_signs_are_mutually_compatible(signs, sign1, sign2, expected):
     assert signs_are_mutually_compatible(signs,sign1,sign2) == expected
@@ -46,5 +48,9 @@ def test_get_sign_by_date(signs):
     date = datetime(year=2021, month=1, day=15)
     actual = get_sign_by_date(signs, date)
     assert actual == 'Capricorn'
-
-
+    date = datetime(year=2021, month=3, day=20)
+    actual = get_sign_by_date(signs, date)
+    assert actual == 'Pisces'
+    date = datetime(year=2021, month=2, day=19)
+    actual = get_sign_by_date(signs, date)
+    assert actual == 'Pisces'
