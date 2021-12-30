@@ -26,7 +26,7 @@ def signs():
 
 def test_signs(signs):
     for sign in signs:
-        assert isinstance(sign, Sign)
+        assert str(sign.__class__) == "<class 'zodiac.Sign'>"
 
 def test_get_sign_with_most_people(signs):
     actual = get_sign_with_most_famous_people(signs)
