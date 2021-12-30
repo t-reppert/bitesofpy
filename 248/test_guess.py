@@ -1,6 +1,6 @@
 from unittest.mock import patch, MagicMock
+from collections import deque
 
-import sys
 import pytest
 
 from guess import GuessGame, InvalidNumber, MAX_NUMBER
@@ -23,6 +23,21 @@ def test_valid_secret_numbers(monkeypatch, capsys):
         g()
         captured = capsys.readouterr()
         assert "You guessed it!\n" in captured.out
+
+
+def make_multiple_inputs(inputs):
+    def next_input():
+        return inputs.popleft()
+    return next_input
+
+
+def test_invalid_guess(capsys, monkeypatch):
+    monkeypatch.setitem(__builtins__, 'input', make_multiple_inputs(deque(["a", 9])))
+    g = GuessGame(9)
+    g()
+    captured = capsys.readouterr()
+    assert "Enter a number, try again\n" in captured.out
+    assert "You guessed it!\n" in captured.out
     
 
 def test_too_low(monkeypatch, capsys):
