@@ -15,7 +15,7 @@ def test_invalid_secret_numbers():
     with pytest.raises(InvalidNumber, match='Number too high'):
         GuessGame(MAX_NUMBER+50)
     with pytest.raises(InvalidNumber, match='Number too high'):
-        GuessGame(MAX_NUMBER+50)
+        GuessGame(MAX_NUMBER+1)
 
 def test_valid_secret_numbers(monkeypatch, capsys):
     g = GuessGame(9)
@@ -23,6 +23,17 @@ def test_valid_secret_numbers(monkeypatch, capsys):
         m.setattr('builtins.input', lambda: 9)
         g()
         captured = capsys.readouterr()
+        assert "Guess a number: " in captured.out
+        assert "You guessed it!\n" in captured.out
+
+
+def test_valid_max_number(monkeypatch, capsys):
+    g = GuessGame(15)
+    with monkeypatch.context() as m:
+        m.setattr('builtins.input', lambda: 15)
+        g()
+        captured = capsys.readouterr()
+        assert "Guess a number: " in captured.out
         assert "You guessed it!\n" in captured.out
 
 def test_valid_secret_numbers(monkeypatch, capsys):
@@ -46,6 +57,7 @@ def test_invalid_guess(capsys, monkeypatch):
     g = GuessGame(9)
     g()
     captured = capsys.readouterr()
+    assert g.attempt == 1
     assert "Enter a number, try again\n" in captured.out
     assert "You guessed it!\n" in captured.out
     
