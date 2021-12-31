@@ -93,6 +93,7 @@ def test_max_guesses(monkeypatch, capsys):
         g()
         captured = capsys.readouterr()
         assert f"Sorry, the number was 9\n" in captured.out
+        assert g.attempt == 5
         assert g.max_guesses == 5
 
 
