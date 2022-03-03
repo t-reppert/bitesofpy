@@ -1,0 +1,40 @@
+<p>In statistics and statistical physics, the Metropolis&ndash;Hastings algorithm is a Markov chain Monte Carlo (MCMC) method for obtaining a sequence of random samples from a probability distribution from which direct sampling is difficult.&nbsp;</p>
+<p>This sequence can be used to approximate the distribution (e.g. to generate a histogram) or to compute an integral (e.g. an expected value).</p>
+<p>Metropolis&ndash;Hastings and other MCMC algorithms are generally used for sampling from multi-dimensional distributions, especially when the number of dimensions is high.</p>
+<h4>Metropolis Algorithm</h4>
+<p>For the purpose of illustration, you will implement a special case of the Metropolis&ndash;Hastings algorithm where the proposal function (which candidate to choose next) is symmetric (all candidates with the same distance to the current value are equally likely).</p>
+<p>Given a function <code>f</code> from which we want to draws <code>N</code> samples to approximate this function. <code>f</code> should accept a single parameter <code>x</code> and return the function's value for <code>x</code>, that is <code>f(x)</code>.</p>
+<p>1. Initialization: Choose an arbitrary point <code>x_0</code> to be the first observation in the list of samples and choose the normal (Gaussian) distribution as a proposal function that suggests a candidate for the next sample value <code>x_next</code>, given the previous sample value <code>x_t</code>.</p>
+<p>The Gaussian distribution is centered at the current sample <code>x_t</code>, so that points closer to <code>x_t</code> are more likely to be visited next, making the sequence of samples into a random walk.</p>
+<p>2. For each iteration <code>t</code>:</p>
+<p>- Generate a candidate <code>x_next</code> for the next sample by drawing a random sample from the proposal distribution that is centered at the current sample <code>x_t</code>.</p>
+<p>- Calculate the acceptance ratio <code>&alpha;=f(x_next)/f(x_t)</code>, which will be used to decide whether to accept or reject the candidate (the ratio is the probability to move to <code>x_next</code>).</p>
+<p>- Accept or reject:</p>
+<p>&nbsp; - Generate a uniform random number <code>u</code> drawn from the interval 0 to 1.</p>
+<p>&nbsp; - If <code>u &le; &alpha;</code>, then accept the candidate <code>x_next</code>&nbsp;as next sample.</p>
+<p>&nbsp; - If <code>u &gt; &alpha;</code>, then reject the candidate and stay at <code>x_t</code>, that is <code>x_next=x_t</code></p>
+<h4>Task</h4>
+<p>Your task in this exercise is to implement the Metropolis-Hastings algorithm.&nbsp;</p>
+<p>Your function will be used to approximate the mean and standard deviation values for a range of common univariate distributions like the normal distribution.</p>
+<p>You are provided with a template for the function <code>metropolis_hastings</code>.</p>
+<p>You have to implement the above mentioned algorithm in Python.&nbsp;</p>
+<p>The function accepts an arbitrary probability density <code>f</code> (will be provided, see the tests), a start value <code>x_0</code> and the number of samples <code>n_samples</code> to draw from <code>f</code>.</p>
+<p>Step one of the algorithm is already done by passing <code>x_0</code> to the function (or setting it to zero by default).</p>
+<p><code>x_0</code> is your first sample and from there you will move either to some point in the neighborhood or stay at <code>x_0</code>.</p>
+<p>For this bite, you use a normal distribution as proposal distribution with a standard deviation of one and a mean value that is equal to the current sample (<code>x_0</code>&nbsp;at the beginner and <code>x_t</code> afterwards).</p>
+<p>Refer to the tests to see how the function is called and how the statistics of <code>f</code> are tested.</p>
+<h4>Example</h4>
+<p>To test your function, you could try to guess the mean and standard deviation of a normal distribution like in the following example.</p>
+<pre>import numpy as np<br /><br />def norm_dist(x, mean, std):<br />&nbsp; &nbsp; """Gaussian normal probability distribution."""<br />&nbsp; &nbsp; return np.exp(-0.5 * (x - mean) ** 2 / std ** 2)<br /><br /><br />samples = metropolis_hastings(f=lambda x: norm_dist(x, mean=0, std=1), x_0=-1, n_samples=100)<br />print(samples.mean(), samples.std())</pre>
+<p>If your implementation is right, this should return an approximation of the true mean (0) and standard deviation (1).</p>
+<h4>Hints</h4>
+<p><code>numpy</code> will come handy in this exercise as you can use it to sample both from a normal distribution and from a uniform distribution.&nbsp;</p>
+<p>See <code><a href="https://numpy.org/doc/stable/reference/random/index.html" target="_blank" rel="noopener">numpy.random</a></code> for further details.</p>
+<p>If you want to take things up a notch, you should look into <code>scipy.stats</code>, the module of scipy that contains a large number of probability distributions, summary and frequency statistics, correlation functions and statistical tests. For example, <code>scipy.stats</code> has a <code>norm</code> function that can be used to draw samples from a normal distribution (<code>norm.rvs(size=100)</code>), to calculate the probability of an x-value (<code>norm.pdf(x)</code>), and to calculate the cumulative probability of an x-value (<code>norm.cdf(x)</code>).</p>
+<p>As I said, <code>scipy.stats</code> is optional and just for the curious, you can solve this bite with <code>numpy</code> alone.</p>
+<p>Happy coding!</p>
+<p>For more background on the Metropolis&ndash;Hastings algorithm check out <a href="https://bites-data.s3.us-east-2.amazonaws.com/bite333-background.html" target="_blank" rel="noopener">this page</a>.</p>
+<h4>Further Reading Material</h4>
+<p>If you are interested in the topic, I recommend <a href="https://people.duke.edu/~ccc14/sta-663/mcmc.html" target="_blank" rel="noopener">Computational Statistics in Python</a>&nbsp;with a lot of code to see the concepts in action!</p>
+<p>If you want to take things up a notch, you should look into <code>scipy.stats</code>, the module of scipy that contains a large number of probability distributions, summary and frequency statistics, correlation functions and statistical tests. For example, <code>scipy.stats</code> has a <code>norm</code> function that can be used to draw samples from a normal distribution (<code>norm.rvs(size=100)</code>), to calculate the probability of an x-value (<code>norm.pdf</code><code>(x)</code>), and to calculate the cumulative probability of an x-value (<code>norm.cdf(x)</code>).</p>
+<p>&nbsp;As I said, <code>scipy.stats</code> is optional and just for the curious, you can solve this bite with <code>numpy</code> alone. Be aware that <code>scipy</code> is not available on the pybites platform, so you have to try it locally.</p>
