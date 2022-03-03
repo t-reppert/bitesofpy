@@ -1,0 +1,15 @@
+<p>Your job is to write a simple TCP/IP client which will contact a server and exchange data:</p>
+<p>- The server is listening on a specific port and will send the client a fixed sized message when the client first connects.</p>
+<p>- The server expects the client to reply with SHA-256 hash of the message the client received.</p>
+<p>- The server will keep sending messages and expecting responses.</p>
+<p>- The server will close connection at some point. Closing connection is indicated by server sending empty message <code>b""</code>.</p>
+<h3>Task</h3>
+<p>1. Create a client that will connect to the server using specific address and port. Address example: <code>("localhost", 4321)</code></p>
+<p>2. The client will receive a fixed size message from the server.&nbsp;&nbsp;</p>
+<p>3. After each message is received, the client will answer with a confirmation message.</p>
+<p>4. The confirmation message is 32 byte long SHA-256 hash generated from the received message.</p>
+<p>5. The client continues to respond to messages until the server closes the connection.</p>
+<p>6. The server may close the connection at any time, it's up to the client to handle this behavior (that is the client should not crash in such case).</p>
+<h3>Useful links</h3>
+<p><a href="https://docs.python.org/3/library/socket.html" target="_blank" rel="noopener">socket &mdash; Low-level networking interface</a></p>
+<p><a href="https://realpython.com/python-sockets/" target="_blank" rel="noopener">Socket Programming in Python (Guide)</a></p>
